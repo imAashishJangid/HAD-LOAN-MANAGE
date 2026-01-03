@@ -8,6 +8,7 @@ import {
   searchByIdNumber,
   getLoanStatistics,
   testCloudinary,
+  createMultipleLoans
 } from "../controllers/loanController.js";
 import upload, { uploadToCloudinary } from "../middleware/upload.js";
 
@@ -44,5 +45,7 @@ router.delete("/:id", deleteLoanById);
 
 // SEARCH loan by ID number
 router.get("/search/:idNumber", searchByIdNumber);
+
+router.post("/bulk", createMultipleLoans);
 
 export default router;

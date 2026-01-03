@@ -41,25 +41,18 @@ export const createLoan = async (req, res, next) => {
   }
 };
 
-export const getAllLoans = async (req, res, next) => {
+export const getAllLoansDirect = async (req, res, next) => {
   try {
-    const { 
-      page = 1, 
-      limit = 10, 
-      status, 
-      search,
-      sortBy = 'createdAt',
-      sortOrder = 'desc' 
-    } = req.query;
-    
+    const { status, search, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
+
     const query = {};
-    
+
     // Filter by status
     if (status) {
       query.status = status;
     }
-    
-    // Search functionality
+
+    // Search by name, phone, or idNumber
     if (search) {
       query.$or = [
         { name: { $regex: search, $options: 'i' } },
@@ -67,36 +60,25 @@ export const getAllLoans = async (req, res, next) => {
         { idNumber: { $regex: search, $options: 'i' } },
       ];
     }
-    
-    // Calculate skip for pagination
-    const skip = (parseInt(page) - 1) * parseInt(limit);
-    
+
     // Sort configuration
     const sort = {};
     sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
-    
-    // Execute query with pagination
-    const loans = await Loan.find(query)
-      .sort(sort)
-      .skip(skip)
-      .limit(parseInt(limit));
-    
-    // Get total count
-    const total = await Loan.countDocuments(query);
-    
+
+    // Fetch all loans without pagination
+    const loans = await Loan.find(query).sort(sort);
+
     res.status(200).json({
       success: true,
       count: loans.length,
-      total,
-      totalPages: Math.ceil(total / limit),
-      currentPage: parseInt(page),
       data: loans,
     });
   } catch (error) {
-    console.error("Get All Loans Error:", error);
+    console.error("Get All Loans Direct Error:", error);
     next(error);
   }
 };
+
 
 export const getLoanById = async (req, res, next) => {
   try {
@@ -327,3 +309,24 @@ export const testCloudinary = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
