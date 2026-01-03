@@ -46,6 +46,6 @@ router.delete("/:id", deleteLoanById);
 // SEARCH loan by ID number
 router.get("/search/:idNumber", searchByIdNumber);
 
-router.post("/bulk", createMultipleLoans);
+
 
 export default router;
