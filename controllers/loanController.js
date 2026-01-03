@@ -41,7 +41,7 @@ export const createLoan = async (req, res, next) => {
   }
 };
 
-export const getAllLoansDirect = async (req, res, next) => {
+export const getAllLoans = async (req, res, next) => {
   try {
     const { status, search, sortBy = 'createdAt', sortOrder = 'desc' } = req.query;
 

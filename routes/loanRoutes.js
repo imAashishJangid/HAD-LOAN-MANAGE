@@ -7,8 +7,7 @@ import {
   deleteLoanById,
   searchByIdNumber,
   getLoanStatistics,
-  testCloudinary,
-  createMultipleLoans
+  testCloudinary
 } from "../controllers/loanController.js";
 import upload, { uploadToCloudinary } from "../middleware/upload.js";
 
